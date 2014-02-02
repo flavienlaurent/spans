@@ -1,0 +1,22 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme.ViewPagerTheme" parent="android:Theme.Holo.Light">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="SpecialTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/color1</item>
+        <item name="android:textColorHighlight">@color/color2</item>
+        <item name="android:textColorHint">@color/color3</item>
+        <item name="android:textColorLink">@color/color4</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+</resources>

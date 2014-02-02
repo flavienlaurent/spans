@@ -1,0 +1,96 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CCCCCC"
+            android:padding="18dp"
+            android:text="@string/bacon_ipsum"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/btn_animate_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Animate foreground color"/>
+
+        <Button
+            android:id="@+id/btn_animate_typewriter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Typewriter"/>
+
+        <Button
+            android:id="@+id/btn_animate_ab_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Progressive blur"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_do_span"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Span it!"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_draw1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="draw with span 1"/>
+
+        <Button
+            android:id="@+id/btn_draw2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="draw with span 2"/>
+
+        <Button
+            android:id="@+id/btn_draw3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="draw with span 3"/>
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="reset"/>
+
+        <Button
+            android:id="@+id/btn_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ViewPager"/>
+
+        <Button
+            android:id="@+id/btn_animate_ab_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Animate the ActionBar title"/>
+
+    </LinearLayout>
+</ScrollView>
