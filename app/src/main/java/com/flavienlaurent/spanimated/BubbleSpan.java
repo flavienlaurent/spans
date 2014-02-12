@@ -39,10 +39,8 @@ public class BubbleSpan extends ReplacementSpan {
 
     @Override
     public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
-        String word = extractText(text, start, end);
-        if(mWidth < 0) {
-            mWidth = (int) paint.measureText(word);
-        }
+        //return text with relative to the Paint
+		mWidth = (int) paint.measureText(text, start, end);
         return mWidth;
     }
 
