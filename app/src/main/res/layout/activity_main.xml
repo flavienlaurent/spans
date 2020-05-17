@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:background="#CCCCCC"
             android:padding="18dp"
+            android:lineSpacingExtra="14dp"
             android:text="@string/bacon_ipsum"
             android:textColor="@color/text_color"
             android:textSize="16sp"/>
@@ -61,6 +62,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="draw with span 1"/>
+
+        <Button
+            android:id="@+id/btn_corner_mark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="draw corner mark with number"/>
 
         <Button
             android:id="@+id/btn_draw2"

@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
     private Button mBtnDraw1;
     private Button mBtnDraw2;
     private Button mBtnDraw3;
+    private Button mBtnDrawCornMark;
     private Button mBtnAnimateTypeWriter;
     private Button mBtnViewPager;
     private Button mBtnAnimateAb1;
@@ -87,6 +88,7 @@ public class MainActivity extends Activity {
         mBtnDraw1 = (Button) findViewById(R.id.btn_draw1);
         mBtnDraw2 = (Button) findViewById(R.id.btn_draw2);
         mBtnDraw3 = (Button) findViewById(R.id.btn_draw3);
+        mBtnDrawCornMark = (Button) findViewById(R.id.btn_corner_mark);
         mBtnAnimateTypeWriter = (Button) findViewById(R.id.btn_animate_typewriter);
         mBtnReset = (Button) findViewById(R.id.btn_reset);
         mBtnViewPager = (Button) findViewById(R.id.btn_viewpager);
@@ -121,6 +123,13 @@ public class MainActivity extends Activity {
             }
         });
 
+        mBtnDrawCornMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reset();
+                drawingCornerMarkSpan();
+            }
+        });
         mBtnDraw2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -360,6 +369,16 @@ public class MainActivity extends Activity {
 
         WordPosition wordPosition = getWordPosition(mBaconIpsum);
         mBaconIpsumSpannableString.setSpan(drawingSpan, wordPosition.start, wordPosition.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //refresh
+        mText.setText(mBaconIpsumSpannableString);
+    }
+
+    private void drawingCornerMarkSpan() {
+        CornerMarkSpan cornerMarkSpan = new CornerMarkSpan(this, mText.getPaint());
+        mSpans.add(cornerMarkSpan);
+
+        WordPosition wordPosition = getWordPosition(mBaconIpsum);
+        mBaconIpsumSpannableString.setSpan(cornerMarkSpan, wordPosition.start, wordPosition.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //refresh
         mText.setText(mBaconIpsumSpannableString);
     }
