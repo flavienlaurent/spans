@@ -35,7 +35,7 @@ public class CornerMarkSpan extends ReplacementSpan {
         mCornerPaint.setTextSize(mTextPaint.getTextSize() * 0.5f);
         mCornerPaint.setAntiAlias(true);
 
-        cornerDrawable = context.getResources().getDrawable(R.drawable.corner_drawbale);
+        cornerDrawable = context.getResources().getDrawable(R.drawable.corner_back_three_digital);
 
         cornerHeight = dp2px(context, 15);
         cornerWidth = dp2px(context, 15);
