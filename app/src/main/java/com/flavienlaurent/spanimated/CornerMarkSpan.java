@@ -30,12 +30,13 @@ public class CornerMarkSpan extends ReplacementSpan {
         mTextPaint = textPaint;
 
         mCornerPaint = new TextPaint();
+        mCornerPaint.setTextAlign(Paint.Align.CENTER);
         mCornerPaint.setStyle(Paint.Style.FILL);
         mCornerPaint.setColor(Color.WHITE);
         mCornerPaint.setTextSize(mTextPaint.getTextSize() * 0.5f);
         mCornerPaint.setAntiAlias(true);
 
-        cornerDrawable = context.getResources().getDrawable(R.drawable.corner_back_three_digital);
+        cornerDrawable = context.getResources().getDrawable(R.drawable.corner_back_two_digital);
 
         cornerHeight = dp2px(context, 15);
         cornerWidth = dp2px(context, 15);
@@ -73,12 +74,12 @@ public class CornerMarkSpan extends ReplacementSpan {
         }
 
         canvas.save();
-        canvas.translate(x, top - cornerHeight);
+        canvas.translate(x, top - cornerHeight + 3);
         cornerDrawable.draw(canvas);
         canvas.restore();
 
         canvas.save();
-        canvas.translate(0, -cornerHeight - dp2px(mContext, 4));
+        canvas.translate(cornerWidth / 2f - 2, -cornerHeight - dp2px(mContext, 4));
         canvas.drawText("12", 0, 2, x, y, mCornerPaint);
         canvas.restore();
 
