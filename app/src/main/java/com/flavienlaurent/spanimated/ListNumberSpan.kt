@@ -70,7 +70,7 @@ class ListNumberSpan(var isCornerGray: Boolean, var cornerText:String =  "",
 
 
         canvas.save()
-        canvas.translate(x, top.toFloat() + cornerHeight/3f)
+        canvas.translate(x, top.toFloat() + cornerHeight/4f)
         cornerDrawable?.draw(canvas)
         canvas.restore()
 
