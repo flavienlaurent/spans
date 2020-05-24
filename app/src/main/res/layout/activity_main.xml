@@ -15,7 +15,6 @@
             android:layout_height="wrap_content"
             android:background="#CCCCCC"
             android:padding="18dp"
-            android:lineSpacingExtra="14dp"
             android:text="@string/bacon_ipsum"
             android:textColor="@color/text_color"
             android:textSize="16sp"/>
