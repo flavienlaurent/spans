@@ -11,9 +11,12 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.Layout;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
@@ -58,6 +61,7 @@ public class MainActivity extends Activity {
     private Button mBtnDraw1;
     private Button mBtnDraw2;
     private Button mBtnDraw3;
+    private Button mBtnDrawListNum;
     private Button mBtnDrawCornMark;
     private Button mBtnAnimateTypeWriter;
     private Button mBtnViewPager;
@@ -88,6 +92,7 @@ public class MainActivity extends Activity {
         mBtnDraw1 = (Button) findViewById(R.id.btn_draw1);
         mBtnDraw2 = (Button) findViewById(R.id.btn_draw2);
         mBtnDraw3 = (Button) findViewById(R.id.btn_draw3);
+        mBtnDrawListNum = (Button) findViewById(R.id.mBtnDrawListNum);
         mBtnDrawCornMark = (Button) findViewById(R.id.btn_corner_mark);
         mBtnAnimateTypeWriter = (Button) findViewById(R.id.btn_animate_typewriter);
         mBtnReset = (Button) findViewById(R.id.btn_reset);
@@ -123,6 +128,14 @@ public class MainActivity extends Activity {
             }
         });
 
+        mBtnDrawListNum.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View v) {
+                reset();
+                drawingListNumberSpan();
+            }
+        });
         mBtnDrawCornMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -381,6 +394,20 @@ public class MainActivity extends Activity {
         mBaconIpsumSpannableString.setSpan(cornerMarkSpan, wordPosition.start, wordPosition.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //refresh
         mText.setText(mBaconIpsumSpannableString);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void drawingListNumberSpan() {
+        String listNumber = " 999 ";
+        Object spannable = new ListNumberSpan(false,listNumber, this);
+        mSpans.add(spannable);
+
+        WordPosition wordPosition = getWordPosition(mBaconIpsum);
+        SpannableStringBuilder cacheString = new SpannableStringBuilder(mBaconIpsumSpannableString);
+        cacheString.insert(wordPosition.start, listNumber);
+        cacheString.setSpan(spannable, wordPosition.start, wordPosition.start + listNumber.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //refresh
+        mText.setText(cacheString);
     }
 
     private void animateTypeWriter() {

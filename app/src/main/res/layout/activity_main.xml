@@ -64,6 +64,12 @@
             android:text="draw with span 1"/>
 
         <Button
+            android:id="@+id/mBtnDrawListNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="draw list number"/>
+
+        <Button
             android:id="@+id/btn_corner_mark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
