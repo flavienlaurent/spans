@@ -46,6 +46,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -398,7 +400,10 @@ public class MainActivity extends Activity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void drawingListNumberSpan() {
-        String listNumber = " 999 ";
+        String listNumber = "10";
+
+        listNumber = fixNumberLength(listNumber);
+
         Object spannable = new ListNumberSpan(false,listNumber, this);
         mSpans.add(spannable);
 
@@ -408,6 +413,16 @@ public class MainActivity extends Activity {
         cacheString.setSpan(spannable, wordPosition.start, wordPosition.start + listNumber.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //refresh
         mText.setText(cacheString);
+    }
+
+    @NotNull
+    private String fixNumberLength(String listNumber) {
+        if (listNumber.length() == 1) {
+            listNumber = "  " + listNumber + "  ";
+        } else {
+            listNumber = " " + listNumber + " ";
+        }
+        return listNumber;
     }
 
     private void animateTypeWriter() {

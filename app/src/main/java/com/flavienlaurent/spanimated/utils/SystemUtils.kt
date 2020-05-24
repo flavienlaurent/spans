@@ -2,7 +2,7 @@ package com.flavienlaurent.spanimated.utils
 
 import android.content.Context
 
-object SpanDimensionUtils {
+object SystemUtils {
 
     /**
      * 将dip或dp值转换为px值，保证尺寸大小不变
