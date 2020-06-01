@@ -13,11 +13,13 @@ import kotlin.math.abs
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class ListNumberSpan(var isCornerGray: Boolean, var cornerText:String =  "",
                      var context: Context) : ReplacementSpan() {
-
+    val COLOR_SENTENCE_HIGH_LIGHT = Color.parseColor("#66F5FF9A")
+    val UNSELECT_SENTENCE_BACKGROUND_COLOR = Color.parseColor("#08000000")
     var backGroundColor: Int = Color.parseColor("#262626")
     var backGroundGrayColor: Int = Color.parseColor("#A7A7A7")
     var textColor: Int = Color.WHITE
 
+    private val mRectBackgroundPaint: Paint = Paint()
     private var mBackgroundPaint: Paint = Paint()
     private var cornerTextPaint: Paint = TextPaint()
     private var mWidth = -1
@@ -32,6 +34,9 @@ class ListNumberSpan(var isCornerGray: Boolean, var cornerText:String =  "",
 
 
     private fun initPaint() {
+        mRectBackgroundPaint.color  = if (isCornerGray) UNSELECT_SENTENCE_BACKGROUND_COLOR else COLOR_SENTENCE_HIGH_LIGHT
+        mRectBackgroundPaint.style = Paint.Style.FILL
+
         mBackgroundPaint.color = if(isCornerGray) backGroundGrayColor else backGroundColor
         mBackgroundPaint.isAntiAlias = true
 
@@ -53,6 +58,8 @@ class ListNumberSpan(var isCornerGray: Boolean, var cornerText:String =  "",
 
     override fun draw(canvas: Canvas, text: CharSequence, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, paint: Paint) {
         val charWidth = paint.measureText(cornerText)
+
+        canvas.drawRect(x, top.toFloat(), x + charWidth, bottom.toFloat(), mRectBackgroundPaint)
 
         canvas.save()
         // first line need extra delta y

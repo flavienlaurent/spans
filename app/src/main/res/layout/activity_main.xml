@@ -17,7 +17,8 @@
             android:padding="18dp"
             android:text="@string/bacon_ipsum"
             android:textColor="@color/text_color"
-            android:textSize="16sp"/>
+            android:textSize="18sp"
+            android:lineSpacingExtra="6dp" />
 
         <Button
             android:id="@+id/btn_animate_color"
