@@ -8,25 +8,37 @@ import android.support.annotation.RequiresApi
 import android.text.TextPaint
 import android.text.style.ReplacementSpan
 import com.flavienlaurent.spanimated.utils.SystemUtils
-import kotlin.math.abs
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class ListNumberSpan(var isCornerGray: Boolean, var cornerText:String =  "",
+class ListNumberSpan(var isGrayStatus: Boolean, var number:String =  "",
                      var context: Context) : ReplacementSpan() {
-    val COLOR_SENTENCE_HIGH_LIGHT = Color.parseColor("#66F5FF9A")
-    val UNSELECT_SENTENCE_BACKGROUND_COLOR = Color.parseColor("#08000000")
-    var backGroundColor: Int = Color.parseColor("#262626")
-    var backGroundGrayColor: Int = Color.parseColor("#A7A7A7")
-    var textColor: Int = Color.WHITE
 
+    private val COLOR_SENTENCE_HIGH_LIGHT = Color.parseColor("#66F5FF9A")
+    private val UNSELECT_SENTENCE_BACKGROUND_COLOR = Color.parseColor("#08000000")
+
+    private val backGroundColor: Int = Color.parseColor("#262626")
+    private val backGroundGrayColor: Int = Color.parseColor("#A7A7A7")
+    private val textColor: Int = Color.WHITE
+
+    /**
+     * 圆角矩形 和 数字  底部重叠后，将圆角矩形往Y轴的偏移量
+     */
+    private val numberBaseLineYDelta = SystemUtils.dp2px(context, 3f)
+    private var mNumberWidth = 0
+
+    private val numberPaint: Paint = TextPaint()
     private val mRectBackgroundPaint: Paint = Paint()
-    private var mBackgroundPaint: Paint = Paint()
-    private var cornerTextPaint: Paint = TextPaint()
-    private var mWidth = -1
-    private val mRectF = RectF()
+    private val mRoundRectBackgroundPaint: Paint = Paint()
 
-    private var mCornerHeight = SystemUtils.dp2px(context, 12f)
-    private var backgroundDeltaY = 0f
+
+    private val mRoundRectF = RectF()
+    private val roundRectRadius: Float = SystemUtils.dp2px(context, 6f).toFloat()
+
+    /**
+     * 排除数字后的宽度
+     */
+    private val roundRectBackgroundWidth = SystemUtils.dp2px(context, 12f)
+    private val roundRectBackgroundHeight = SystemUtils.dp2px(context, 12f)
 
     init {
         initPaint()
@@ -34,44 +46,43 @@ class ListNumberSpan(var isCornerGray: Boolean, var cornerText:String =  "",
 
 
     private fun initPaint() {
-        mRectBackgroundPaint.color  = if (isCornerGray) UNSELECT_SENTENCE_BACKGROUND_COLOR else COLOR_SENTENCE_HIGH_LIGHT
+        mRectBackgroundPaint.color  = if (isGrayStatus) UNSELECT_SENTENCE_BACKGROUND_COLOR else COLOR_SENTENCE_HIGH_LIGHT
         mRectBackgroundPaint.style = Paint.Style.FILL
 
-        mBackgroundPaint.color = if(isCornerGray) backGroundGrayColor else backGroundColor
-        mBackgroundPaint.isAntiAlias = true
+        mRoundRectBackgroundPaint.color = if(isGrayStatus) backGroundGrayColor else backGroundColor
+        mRoundRectBackgroundPaint.isAntiAlias = true
 
-        cornerTextPaint.color = textColor
-        cornerTextPaint.isAntiAlias = true
-        cornerTextPaint.textSize = SystemUtils.sp2px(context, 9f).toFloat()
-        cornerTextPaint.textAlign = Paint.Align.CENTER
+        numberPaint.color = textColor
+        numberPaint.isAntiAlias = true
+        numberPaint.textSize = SystemUtils.sp2px(context, 9f).toFloat()
+        numberPaint.textAlign = Paint.Align.CENTER
     }
 
     override fun getSize(paint: Paint, text: CharSequence, start: Int, end: Int, fm: FontMetricsInt?): Int { //return text with relative to the Paint
-        mWidth = paint.measureText(text, start, end).toInt()
-        fm?.let {
-            mCornerHeight = abs(fm.ascent)
-            backgroundDeltaY = abs(fm.ascent - fm.top).toFloat()
-        }
+        mNumberWidth = numberPaint.measureText(text, start, end).toInt()
+        mNumberWidth += roundRectBackgroundWidth
 
-        return mWidth
+        return mNumberWidth
     }
 
     override fun draw(canvas: Canvas, text: CharSequence, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, paint: Paint) {
-        val charWidth = paint.measureText(cornerText)
-
-        canvas.drawRect(x, top.toFloat(), x + charWidth, bottom.toFloat(), mRectBackgroundPaint)
+        canvas.drawRect(x, top.toFloat(), x + mNumberWidth, bottom.toFloat(), mRectBackgroundPaint)
+        val deltaY = (y - top - roundRectBackgroundHeight + numberBaseLineYDelta).toFloat()
 
         canvas.save()
-        // first line need extra delta y
-        canvas.translate(0f , if (top < backgroundDeltaY ) (backgroundDeltaY * 2) else backgroundDeltaY)
-        mRectF.set(x, top.toFloat(), x + charWidth, top.toFloat() + mCornerHeight)
-        val radius = mCornerHeight / 2f
-        canvas.drawRoundRect(mRectF, radius, radius, mBackgroundPaint)
+        canvas.translate(0f, (-numberBaseLineYDelta).toFloat())
+
+        canvas.save()
+        canvas.translate(0f, deltaY)
+        mRoundRectF.set(x, top.toFloat(), x + mNumberWidth, top.toFloat() + roundRectBackgroundHeight)
+        canvas.drawRoundRect(mRoundRectF, roundRectRadius, roundRectRadius, mRoundRectBackgroundPaint)
         canvas.restore()
 
         canvas.save()
-        canvas.translate(mWidth / 2f , -backgroundDeltaY)
-        canvas.drawText(cornerText, 0, cornerText.length, x, y.toFloat(), cornerTextPaint)
+        canvas.translate(mNumberWidth / 2f ,0f )
+        canvas.drawText(number, 0, number.length, x, y.toFloat(), numberPaint)
+        canvas.restore()
+
         canvas.restore()
 
     }
